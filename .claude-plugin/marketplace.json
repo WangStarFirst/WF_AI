@@ -1,0 +1,11 @@
+{
+  "name": "wf-ai",
+  "owner": { "name": "WangStarFirst" },
+  "plugins": [
+    {
+      "name": "wf-toolbox",
+      "source": "./",
+      "description": "WF 個人工具箱:wf-project-setup 與 wf-project-review。"
+    }
+  ]
+}

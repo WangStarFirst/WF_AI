@@ -6,3 +6,8 @@
 更新方式：重新從上游複製對應的 `skills/engineering/*` 與 `skills/productivity/*` 目錄。
 
 首次使用請執行 `/setup-matt-pocock-skills`，設定 issue tracker、triage 標籤與文件存放位置。
+
+## WF 自製技能
+
+- `/wf-project-setup`:在目前專案安裝上游 skills、(選擇性)連接 GitHub 與 LICENSE、輸出使用教學。
+- `/wf-project-review`:先檢視專案,再用 grilling 訪談,最後產出 `docs/reviews/YYYY-MM-DD.md` 建議報告(唯讀)。

@@ -1,0 +1,12 @@
+{
+  "name": "wf-toolbox",
+  "version": "0.1.0",
+  "description": "WF 個人工具箱:快速建立專案起始設定,以及 Review 整個專案。",
+  "author": { "name": "WangStarFirst" },
+  "repository": "https://github.com/WangStarFirst/WF_AI",
+  "license": "MIT",
+  "skills": [
+    "./.claude/skills/wf-project-setup",
+    "./.claude/skills/wf-project-review"
+  ]
+}

@@ -2,7 +2,8 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
 <title>WF Toolbox 架構</title>
 <style>
   :root {
@@ -15,17 +16,24 @@
       --bg:#0b0f17; --card:#121826; --text:#e5e7eb; --muted:#9ca3af; --line:#1f2937;
       --accent:#60a5fa; --accent-soft:#1e293b;
       --k-wf:#60a5fa; --k-upstream:#a78bfa; --k-manual:#fbbf24; --k-subagent:#2dd4bf; --k-ask:#f472b6; --k-action:#9ca3af;
+      color-scheme:dark;
     }
+  }
+  :root[data-theme="dark"] {
+    --bg:#0b0f17; --card:#121826; --text:#e5e7eb; --muted:#9ca3af; --line:#1f2937;
+    --accent:#60a5fa; --accent-soft:#1e293b;
+    --k-wf:#60a5fa; --k-upstream:#a78bfa; --k-manual:#fbbf24; --k-subagent:#2dd4bf; --k-ask:#f472b6; --k-action:#9ca3af;
+    color-scheme:dark;
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--text); font:15px/1.6 system-ui, -apple-system, "Noto Sans TC", "PingFang TC", sans-serif; }
-  main { max-width:1120px; margin:0 auto; padding:40px 16px 80px; }
+  main { max-width:1120px; margin:0 auto; padding-block:40px 80px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
   header h1 { margin:0; font-size:30px; letter-spacing:-.01em; }
   header p { margin:6px 0 0; color:var(--muted); }
   h2 { font-size:19px; margin:44px 0 14px; }
   section > p.lead { color:var(--muted); margin:-6px 0 14px; }
   .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }
-  .mermaid { overflow-x:auto; text-align:center; }
+  .diagram { overflow-x:auto; text-align:center; margin:0; }
 
   .legend { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:12px; font-size:13px; color:var(--muted); }
   .badge { display:inline-block; font-size:11px; font-weight:600; padding:1px 7px; border-radius:999px; border:1px solid currentColor; white-space:nowrap; }
@@ -67,7 +75,7 @@
   <section>
     <h2>流程圖</h2>
     <p class="lead">實線是 wf skill 之間的呼叫;虛線是呼叫上游 mattpocock skill(紫色是同一個 session,橘色是要開新 session 手動執行)。</p>
-    <div class="panel"><pre class="mermaid" id="diagram"></pre>
+    <div class="panel"><pre class="diagram" id="diagram"></pre>
       <div class="legend" id="legend"></div>
     </div>
   </section>

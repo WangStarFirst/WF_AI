@@ -5,7 +5,7 @@
     {
       "name": "wf-toolbox",
       "source": "./",
-      "description": "WF 個人工具箱:wf-project-setup 與 wf-project-review。"
+      "description": "WF 工作流:setup → design → implement,以 mattpocock/skills 為基礎。"
     }
   ]
 }

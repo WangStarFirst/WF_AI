@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- FILL: 專案名稱 --> 架構圖</title>
+<style>
+  :root { --bg:#f8fafc; --card:#fff; --text:#0f172a; --muted:#64748b; --line:#e2e8f0; --accent:#2563eb; --warn:#b45309; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0b1120; --card:#111827; --text:#e5e7eb; --muted:#94a3b8; --line:#1f2937; --accent:#60a5fa; --warn:#fbbf24; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui, "Noto Sans TC", sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { margin:0 0 4px; font-size:28px; }
+  .meta { color:var(--muted); margin-bottom:32px; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 24px; margin-bottom:20px; }
+  h2 { margin:0 0 12px; font-size:20px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .card h3 { margin:0 0 6px; font-size:16px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; }
+  .gap { color:var(--warn); }
+  .mermaid { overflow-x:auto; }
+</style>
+</head>
+<body>
+<main>
+  <h1><!-- FILL: 專案名稱 --></h1>
+  <div class="meta">產生日期 <!-- FILL: YYYY-MM-DD --> · 由 /wf-project-review 產生</div>
+
+  <section id="overview">
+    <h2>專案概覽</h2>
+    <!-- FILL: 一句話目標、使用者、核心功能(清單)、不做的事(清單) -->
+  </section>
+
+  <section id="architecture">
+    <h2>架構圖</h2>
+    <pre class="mermaid">
+<!-- FILL: Mermaid flowchart -->
+    </pre>
+  </section>
+
+  <section id="decisions">
+    <h2>決策</h2>
+    <div class="cards">
+      <!-- FILL: 每個 ADR 一張 <div class="card"><h3>標題</h3><p>結論</p><small>日期 · 檔案</small></div> -->
+    </div>
+  </section>
+
+  <section id="glossary">
+    <h2>術語</h2>
+    <!-- FILL: <table> 術語 | 定義 -->
+  </section>
+
+  <section id="related">
+    <h2>相關專案</h2>
+    <!-- FILL: <table> 功能 × 專案 的比較表 -->
+  </section>
+
+  <section id="gaps">
+    <h2 class="gap">缺口</h2>
+    <!-- FILL: 未決問題、矛盾、尚無決策的元件(清單,每項附來源) -->
+  </section>
+</main>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs";
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({ startOnLoad: true, theme: dark ? "dark" : "default" });
+</script>
+</body>
+</html>

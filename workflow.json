@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "name": "WF Toolbox",
+  "summary": "引導你從零開始完成一個專案:安裝 mattpocock/skills → 設計 → 實作。",
+  "entry": "wf-lazy-start",
+  "stepKinds": {
+    "wf": "呼叫另一個 wf skill",
+    "upstream": "讀取上游 mattpocock skill 的 SKILL.md,在同一個 session 照著做",
+    "manual": "停下來,請使用者自己輸入 /指令(通常要開新 session)",
+    "subagent": "交給 subagent 執行,只把結論帶回主 session",
+    "ask": "詢問使用者並等待決定",
+    "action": "skill 自己執行的動作(寫檔、跑腳本等)"
+  },
+  "skills": [
+    {
+      "id": "wf-lazy-start",
+      "title": "一鍵開始",
+      "invocation": "user",
+      "summary": "依序執行 setup → design → implement,中間不停;design 結束時會問要不要開始實作。",
+      "steps": [
+        { "kind": "wf", "ref": "wf-project-setup", "text": "安裝上游 skill 並設定專案" },
+        { "kind": "wf", "ref": "wf-design", "text": "完成設計,並詢問是否開始實作" },
+        { "kind": "wf", "ref": "wf-implement", "text": "使用者同意後開始實作" }
+      ],
+      "outputs": []
+    },
+    {
+      "id": "wf-project-setup",
+      "title": "專案設定",
+      "invocation": "user",
+      "summary": "下載 mattpocock/skills 到 .claude/skills/,再跑一次 setup-matt-pocock-skills。",
+      "steps": [
+        { "kind": "action", "text": "用 install-upstream.sh 下載上游 skill(先預覽、衝突逐一詢問)" },
+        { "kind": "upstream", "ref": "setup-matt-pocock-skills", "text": "設定 issue tracker、triage 標籤、領域文件" }
+      ],
+      "outputs": [".claude/skills/README.md", "docs/agents/issue-tracker.md"]
+    },
+    {
+      "id": "wf-design",
+      "title": "設計",
+      "invocation": "model",
+      "summary": "從專案概述出發,參考相關專案,經過訪談或 prototype 完成設計,最後畫出架構並詢問是否開始實作。",
+      "steps": [
+        { "kind": "action", "text": "取得專案概述(參數帶入或詢問),寫成 docs/project-brief.md" },
+        { "kind": "wf", "ref": "wf-relate-work", "text": "調查相關專案,修訂 brief" },
+        { "kind": "ask", "text": "建議並詢問要用 grill-with-docs 或 wayfinder" },
+        { "kind": "upstream", "ref": "grill-with-docs", "text": "一個 session 能完成的設計:邊問邊寫 ADR 與 GLOSSARY" },
+        { "kind": "upstream", "ref": "wayfinder", "text": "超過一個 session 的大型設計:決策拆成 tickets" },
+        { "kind": "wf", "ref": "wf-prototype", "text": "問題無法靠訪談回答時,做 prototype 找答案" },
+        { "kind": "wf", "ref": "wf-project-review", "text": "畫出目前的專案內容與架構" },
+        { "kind": "ask", "text": "詢問是否開始實作(/wf-implement)" }
+      ],
+      "outputs": ["docs/project-brief.md", "GLOSSARY.md", "docs/adr/"]
+    },
+    {
+      "id": "wf-relate-work",
+      "title": "相關專案調查",
+      "invocation": "model",
+      "summary": "用 subagent 調查至少 3 款相關專案或競品,逐條提出補充/改進/簡化/刪除建議,採用的寫回 brief。",
+      "steps": [
+        { "kind": "subagent", "text": "搜尋至少 3 款相關專案或競品並整理重點" },
+        { "kind": "action", "text": "寫成 docs/related-work.md" },
+        { "kind": "ask", "text": "逐條提出補充/改進/簡化/刪除建議,由使用者決定" },
+        { "kind": "action", "text": "採用的建議寫回 docs/project-brief.md" }
+      ],
+      "outputs": ["docs/related-work.md"]
+    },
+    {
+      "id": "wf-prototype",
+      "title": "原型驗證",
+      "invocation": "model",
+      "summary": "反覆做 prototype 直到問題有答案;context 快滿或得到結論時才 handoff,結論寫回 ADR 或 brief。",
+      "steps": [
+        { "kind": "upstream", "ref": "prototype", "text": "做一個拋棄式 prototype 回答設計問題" },
+        { "kind": "ask", "text": "和使用者確認結果,不夠就再做一輪" },
+        { "kind": "manual", "ref": "handoff", "text": "context 快滿時 handoff,到新 session 繼續" },
+        { "kind": "action", "text": "結論寫成 ADR 或寫回 brief" }
+      ],
+      "outputs": ["docs/adr/"]
+    },
+    {
+      "id": "wf-project-review",
+      "title": "專案架構圖",
+      "invocation": "model",
+      "summary": "把目標專案目前的內容與架構畫成一份 HTML。",
+      "steps": [
+        { "kind": "action", "text": "讀取 brief、related-work、ADR、GLOSSARY、程式碼結構" },
+        { "kind": "action", "text": "產出 docs/reviews/YYYY-MM-DD.html" }
+      ],
+      "outputs": ["docs/reviews/"]
+    },
+    {
+      "id": "wf-implement",
+      "title": "實作",
+      "invocation": "user",
+      "summary": "找出並安裝適合的 skill,依規模選擇單一或多 session 實作,完成後做 retro。",
+      "steps": [
+        { "kind": "subagent", "text": "從本機、plugin marketplace 與網路搜尋適合的 skill" },
+        { "kind": "ask", "text": "列出清單與來源,逐一確認後安裝到 .claude/skills/" },
+        { "kind": "ask", "text": "建議並確認是否需要多 session" },
+        { "kind": "upstream", "ref": "to-spec", "text": "多 session:把設計整理成 spec" },
+        { "kind": "upstream", "ref": "to-tickets", "text": "多 session:把 spec 拆成 tickets" },
+        { "kind": "manual", "ref": "implement-spec", "text": "多 session:每個 session 實作 tickets" },
+        { "kind": "upstream", "ref": "implement", "text": "單一 session:直接實作" },
+        { "kind": "manual", "ref": "retro", "text": "完成後做回顧" }
+      ],
+      "outputs": []
+    },
+    {
+      "id": "wf-help",
+      "title": "現在該做什麼",
+      "invocation": "model",
+      "summary": "依專案目前的產出判斷所在階段,告訴你可用的 skill 與下一步。",
+      "steps": [
+        { "kind": "action", "text": "依 stages 的訊號判斷目前階段" },
+        { "kind": "action", "text": "列出下一步與可用的 skill" }
+      ],
+      "outputs": []
+    }
+  ],
+  "stages": [
+    {
+      "id": "setup",
+      "title": "專案設定",
+      "doneWhen": [".claude/skills/setup-matt-pocock-skills/SKILL.md", "docs/agents/issue-tracker.md"],
+      "next": "wf-project-setup"
+    },
+    {
+      "id": "brief",
+      "title": "專案概述",
+      "doneWhen": ["docs/project-brief.md"],
+      "next": "wf-design"
+    },
+    {
+      "id": "related-work",
+      "title": "相關專案調查",
+      "doneWhen": ["docs/related-work.md"],
+      "next": "wf-relate-work"
+    },
+    {
+      "id": "design",
+      "title": "設計",
+      "doneWhen": ["docs/adr/"],
+      "next": "wf-design"
+    },
+    {
+      "id": "review",
+      "title": "架構圖",
+      "doneWhen": ["docs/reviews/"],
+      "next": "wf-project-review"
+    },
+    {
+      "id": "implement",
+      "title": "實作",
+      "doneWhen": [],
+      "next": "wf-implement"
+    }
+  ]
+}

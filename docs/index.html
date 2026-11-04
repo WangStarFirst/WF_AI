@@ -187,6 +187,11 @@
           "text": "超過一個 session 的大型設計:決策拆成 tickets"
         },
         {
+          "kind": "manual",
+          "ref": "wf-handoff",
+          "text": "wayfinder 未走完時 handoff,到新 session 繼續"
+        },
+        {
           "kind": "wf",
           "ref": "wf-prototype",
           "text": "問題無法靠訪談回答時,做 prototype 找答案"
@@ -251,7 +256,7 @@
         },
         {
           "kind": "manual",
-          "ref": "handoff",
+          "ref": "wf-handoff",
           "text": "context 快滿時 handoff,到新 session 繼續"
         },
         {
@@ -312,6 +317,11 @@
         },
         {
           "kind": "manual",
+          "ref": "wf-handoff",
+          "text": "多 session:開始實作前先 handoff"
+        },
+        {
+          "kind": "manual",
           "ref": "implement-spec",
           "text": "多 session:每個 session 實作 tickets"
         },
@@ -327,6 +337,40 @@
         }
       ],
       "outputs": []
+    },
+    {
+      "id": "wf-grill-me",
+      "title": "訪談",
+      "invocation": "user",
+      "summary": "直接執行上游 grill-me:針對計畫或設計做徹底的訪談。",
+      "steps": [
+        {
+          "kind": "upstream",
+          "ref": "grill-me",
+          "text": "與上游 /grill-me 相同"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "id": "wf-handoff",
+      "title": "交接",
+      "invocation": "user",
+      "summary": "直接執行上游 handoff,交接文件存到 docs/handoffs/,給新 session 接手。",
+      "steps": [
+        {
+          "kind": "upstream",
+          "ref": "handoff",
+          "text": "與上游 /handoff 相同,但存到 docs/handoffs/"
+        },
+        {
+          "kind": "ask",
+          "text": "詢問是否 commit"
+        }
+      ],
+      "outputs": [
+        "docs/handoffs/"
+      ]
     },
     {
       "id": "wf-help",
@@ -422,7 +466,7 @@
         <span class="inv">${s.invocation === "user" ? "只能手動執行" : "可被模型呼叫"}</span></h3>
       <p>${esc(s.summary)}</p>
       <ol>${s.steps.map(st => `<li><span class="badge k-${st.kind}">${kindLabel[st.kind] ?? st.kind}</span>${
-        st.ref ? (st.kind === "wf" ? `<a href="#${st.ref}"><code>${st.ref}</code></a> ` : `<code>${esc(st.ref)}</code> `) : ""}${esc(st.text)}</li>`).join("")}</ol>
+        st.ref ? (byId[st.ref] ? `<a href="#${st.ref}"><code>${st.ref}</code></a> ` : `<code>${esc(st.ref)}</code> `) : ""}${esc(st.text)}</li>`).join("")}</ol>
       ${s.outputs.length ? `<div class="outputs">產出:${s.outputs.map(o => `<code>${esc(o)}</code>`).join("、")}</div>` : ""}
     </article>`).join("");
 
@@ -436,6 +480,7 @@
   for (const s of wf.skills) {
     for (const st of s.steps) {
       if (st.kind === "wf") lines.push(`  ${node(s.id)} --> ${node(st.ref)}`);
+      else if (st.kind === "manual" && byId[st.ref]) lines.push(`  ${node(s.id)} -.-> ${node(st.ref)}`);
       else if (st.kind === "upstream" || st.kind === "manual") {
         const u = "up_" + node(st.ref);
         if (!upstream.has(u)) upstream.set(u, { ref: st.ref, kind: st.kind });

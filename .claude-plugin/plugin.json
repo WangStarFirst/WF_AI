@@ -13,6 +13,8 @@
     "./.claude/skills/wf-prototype",
     "./.claude/skills/wf-project-review",
     "./.claude/skills/wf-implement",
+    "./.claude/skills/wf-grill-me",
+    "./.claude/skills/wf-handoff",
     "./.claude/skills/wf-help"
   ]
 }

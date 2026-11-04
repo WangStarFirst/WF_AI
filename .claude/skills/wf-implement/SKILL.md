@@ -32,7 +32,7 @@ disable-model-invocation: true
 
 1. 以 **upstream** 方式執行 `to-spec`。
 2. 以 **upstream** 方式執行 `to-tickets`。
-3. **manual**:請使用者為每張 ticket(依 blocking 順序)開新 session,執行 `/implement-spec <ticket>`。全部完成後回來執行 `/retro`。
+3. **manual**:請使用者先輸入 `/wf-handoff 依序實作 tickets`,再為每張 ticket(依 blocking 順序)開新 session,執行 `/implement-spec <ticket>`。全部完成後回來執行 `/retro`。
 
 ### 單一 session
 

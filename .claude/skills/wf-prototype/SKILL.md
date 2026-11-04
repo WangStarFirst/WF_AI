@@ -18,7 +18,7 @@ argument-hint: "要回答的設計問題"
 2. 讓使用者看或操作,問:問題有答案了嗎?
    - 有 → 進入第 3 步。
    - 沒有 → 記下這輪學到什麼、下一輪要改什麼,回到 1。
-3. context 快滿時(對話很長、或 prototype 檔案多到難以追蹤),先把目前的學習寫成 `docs/adr/` 的草稿,再走 **manual**:請使用者輸入 `/handoff 繼續 wf-prototype:<問題>`,到新 session 執行 `/wf-prototype <問題>` 接手。
+3. context 快滿時(對話很長、或 prototype 檔案多到難以追蹤),先把目前的學習寫成 `docs/adr/` 的草稿,再走 **manual**:請使用者輸入 `/wf-handoff 繼續 wf-prototype:<問題>`,到新 session 執行 `/wf-prototype <問題>` 接手。
 
 ## 3. 寫下結論
 

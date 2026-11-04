@@ -32,7 +32,7 @@ argument-hint: "專案概述"
 
 遇到**無法靠訪談回答的問題**(要親眼看到、實際操作,或要跑跑看才知道)→ 用 Skill 工具呼叫 `wf-prototype`,帶上這個問題;拿到結論後回到訪談。
 
-wayfinder 會跨 session:map 還沒走完時,告訴使用者在新 session 執行 `/wf-design` 繼續(步驟 1–3 會沿用既有結果)。
+wayfinder 會跨 session:map 還沒走完時,走 **manual**:請使用者先輸入 `/wf-handoff 繼續 wf-design 的 wayfinder`,再到新 session 執行 `/wf-design` 繼續(步驟 1–3 會沿用既有結果)。
 
 完成條件:grill-with-docs 的設計樹沒有未決分支;或 wayfinder 的 map 已沒有 open 的決策 ticket。
 

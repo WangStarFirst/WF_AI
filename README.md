@@ -40,6 +40,8 @@
 | `/wf-prototype` | 手動或模型 | 反覆做 prototype 直到問題有答案，結論寫成 ADR |
 | `/wf-project-review` | 手動或模型 | 把專案內容與架構畫成 `docs/reviews/YYYY-MM-DD.html` |
 | `/wf-implement` | 只能手動 | 找並安裝 skill，選擇單一或多 session 實作，完成後做 retro |
+| `/wf-grill-me` | 只能手動 | 直接執行上游 `grill-me` |
+| `/wf-handoff` | 只能手動 | 直接執行上游 `handoff`，交接文件存到 `docs/handoffs/`，新 session 才讀得到 |
 | `/wf-help` | 手動或模型 | 依目前的產出判斷所在階段，告訴你下一步 |
 
 ### 在你的專案中產生的檔案
@@ -52,10 +54,11 @@
 | `docs/related-work.md` | `/wf-relate-work` |
 | `docs/adr/`、`GLOSSARY.md` | `grill-with-docs`、`/wf-prototype` |
 | `docs/reviews/YYYY-MM-DD.html` | `/wf-project-review` |
+| `docs/handoffs/` | `/wf-handoff` |
 
 ## 設計原則
 
-- **不修改上游**：上游 skill 大多只能手動觸發，所以 wf skill 會讀取它們的 `SKILL.md`，在同一個 session 照著做；需要開新 session 的步驟（`handoff`、`implement-spec`、`retro`）則請你自己輸入指令。細節見 [shared/conventions.md](./shared/conventions.md)。
+- **不修改上游**：上游 skill 大多只能手動觸發，所以 wf skill 會讀取它們的 `SKILL.md`，在同一個 session 照著做；需要開新 session 的步驟會請你自己輸入指令（先 `/wf-handoff`，再到新 session 繼續）。細節見 [shared/conventions.md](./shared/conventions.md)。
 - **單一來源**：流程定義在 `workflow.json`，專案內容定義在 `docs/project-brief.md`。
 - **詢問而非猜測**：每個需要決定的地方都會給建議並等你回答。
 

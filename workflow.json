@@ -46,6 +46,7 @@
         { "kind": "ask", "text": "建議並詢問要用 grill-with-docs 或 wayfinder" },
         { "kind": "upstream", "ref": "grill-with-docs", "text": "一個 session 能完成的設計:邊問邊寫 ADR 與 GLOSSARY" },
         { "kind": "upstream", "ref": "wayfinder", "text": "超過一個 session 的大型設計:決策拆成 tickets" },
+        { "kind": "manual", "ref": "wf-handoff", "text": "wayfinder 未走完時 handoff,到新 session 繼續" },
         { "kind": "wf", "ref": "wf-prototype", "text": "問題無法靠訪談回答時,做 prototype 找答案" },
         { "kind": "wf", "ref": "wf-project-review", "text": "畫出目前的專案內容與架構" },
         { "kind": "ask", "text": "詢問是否開始實作(/wf-implement)" }
@@ -73,7 +74,7 @@
       "steps": [
         { "kind": "upstream", "ref": "prototype", "text": "做一個拋棄式 prototype 回答設計問題" },
         { "kind": "ask", "text": "和使用者確認結果,不夠就再做一輪" },
-        { "kind": "manual", "ref": "handoff", "text": "context 快滿時 handoff,到新 session 繼續" },
+        { "kind": "manual", "ref": "wf-handoff", "text": "context 快滿時 handoff,到新 session 繼續" },
         { "kind": "action", "text": "結論寫成 ADR 或寫回 brief" }
       ],
       "outputs": ["docs/adr/"]
@@ -100,11 +101,33 @@
         { "kind": "ask", "text": "建議並確認是否需要多 session" },
         { "kind": "upstream", "ref": "to-spec", "text": "多 session:把設計整理成 spec" },
         { "kind": "upstream", "ref": "to-tickets", "text": "多 session:把 spec 拆成 tickets" },
+        { "kind": "manual", "ref": "wf-handoff", "text": "多 session:開始實作前先 handoff" },
         { "kind": "manual", "ref": "implement-spec", "text": "多 session:每個 session 實作 tickets" },
         { "kind": "upstream", "ref": "implement", "text": "單一 session:直接實作" },
         { "kind": "manual", "ref": "retro", "text": "完成後做回顧" }
       ],
       "outputs": []
+    },
+    {
+      "id": "wf-grill-me",
+      "title": "訪談",
+      "invocation": "user",
+      "summary": "直接執行上游 grill-me:針對計畫或設計做徹底的訪談。",
+      "steps": [
+        { "kind": "upstream", "ref": "grill-me", "text": "與上游 /grill-me 相同" }
+      ],
+      "outputs": []
+    },
+    {
+      "id": "wf-handoff",
+      "title": "交接",
+      "invocation": "user",
+      "summary": "直接執行上游 handoff,交接文件存到 docs/handoffs/,給新 session 接手。",
+      "steps": [
+        { "kind": "upstream", "ref": "handoff", "text": "與上游 /handoff 相同,但存到 docs/handoffs/" },
+        { "kind": "ask", "text": "詢問是否 commit" }
+      ],
+      "outputs": ["docs/handoffs/"]
     },
     {
       "id": "wf-help",

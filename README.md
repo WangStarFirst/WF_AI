@@ -24,7 +24,7 @@
 ```
 /wf-lazy-start
  ├─ /wf-project-setup   下載 mattpocock/skills → setup-matt-pocock-skills
- ├─ /wf-design          專案概述 → /wf-relate-work → grill-with-docs 或 wayfinder
+ ├─ /wf-design          專案概述 → /wf-relate-work →（遊戲專案）habits-checklist → grill-with-docs 或 wayfinder
  │                      →（必要時）/wf-prototype → /wf-project-review → 是否開始實作？
  └─ /wf-implement       搜尋並安裝 skill → 單一 session：implement
                                           多 session：to-spec → to-tickets → implement-spec

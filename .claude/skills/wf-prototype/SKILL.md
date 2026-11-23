@@ -14,7 +14,7 @@ argument-hint: "要回答的設計問題"
 
 ## 2. 迴圈
 
-1. 以 **upstream** 方式執行 `prototype`,做一輪拋棄式 prototype。
+1. 以 **upstream** 方式執行 `prototype`,做一輪拋棄式 prototype。問題是遊戲畫面或 UI 的,而且目前 session 有 `uiux-flow` skill → 改用 Skill 工具呼叫 `uiux-flow` 做這一輪(UX → HTML 原型 → 自我檢查)。
 2. 讓使用者看或操作,問:問題有答案了嗎?
    - 有 → 進入第 3 步。
    - 沒有 → 記下這輪學到什麼、下一輪要改什麼,回到 1。
@@ -24,6 +24,6 @@ argument-hint: "要回答的設計問題"
 
 - 結論是架構或取捨決策 → 寫成 ADR,放在 `docs/adr/`(格式依專案的 `docs/agents/domain.md`)。
 - 結論只影響範圍或需求 → 寫回 `docs/project-brief.md`。
-- 記下 prototype 檔案的位置,詢問要「刪除(建議)」或「保留」。
+- 記下 prototype 檔案的位置,詢問要「刪除(建議)」或「保留」。`uiux-flow` 產生的 UI 原型(`docs/ui/prototypes/`)預設保留,不詢問:它是設計系統 PNG 與實裝的來源。
 
 完成條件:問題有一句話的答案,已寫進 ADR 或 brief。把答案回報給呼叫端。

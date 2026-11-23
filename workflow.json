@@ -43,6 +43,7 @@
       "steps": [
         { "kind": "action", "text": "取得專案概述(參數帶入或詢問),寫成 docs/project-brief.md" },
         { "kind": "wf", "ref": "wf-relate-work", "text": "調查相關專案,修訂 brief" },
+        { "kind": "action", "text": "Unity 遊戲專案且有使用者層級的 habits-checklist skill 時,執行它決定開發習慣" },
         { "kind": "ask", "text": "建議並詢問要用 grill-with-docs 或 wayfinder" },
         { "kind": "upstream", "ref": "grill-with-docs", "text": "一個 session 能完成的設計:邊問邊寫 ADR 與 GLOSSARY" },
         { "kind": "upstream", "ref": "wayfinder", "text": "超過一個 session 的大型設計:決策拆成 tickets" },
@@ -72,7 +73,7 @@
       "invocation": "model",
       "summary": "反覆做 prototype 直到問題有答案;context 快滿或得到結論時才 handoff,結論寫回 ADR 或 brief。",
       "steps": [
-        { "kind": "upstream", "ref": "prototype", "text": "做一個拋棄式 prototype 回答設計問題" },
+        { "kind": "upstream", "ref": "prototype", "text": "做一個拋棄式 prototype 回答設計問題;UI 問題且有 uiux-flow skill 時改用它,UI 原型保留" },
         { "kind": "ask", "text": "和使用者確認結果,不夠就再做一輪" },
         { "kind": "manual", "ref": "wf-handoff", "text": "context 快滿時 handoff,到新 session 繼續" },
         { "kind": "action", "text": "結論寫成 ADR 或寫回 brief" }

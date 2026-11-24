@@ -2,8 +2,6 @@
 
 以 [mattpocock/skills](https://github.com/mattpocock/skills) 為基礎的 Claude Code 工作流 plugin，從設定、設計到實作，一路引導你完成一個專案。
 
-架構與流程圖：[docs/index.html](./docs/index.html)（由 `workflow.json` 產生）
-
 ## 安裝（在你的專案）
 
 ```
@@ -19,17 +17,9 @@
 
 不確定下一步該做什麼時，執行 `/wf-help`。
 
-## 流程
+## Skills
 
-```
-/wf-lazy-start
- ├─ /wf-project-setup   下載 mattpocock/skills → setup-matt-pocock-skills
- ├─ /wf-design          專案概述 → /wf-relate-work → grill-with-docs 或 wayfinder
- │                      →（必要時）/wf-prototype → /wf-project-review → 是否開始實作？
- └─ /wf-implement       搜尋並安裝 skill → 單一 session：implement
-                                          多 session：to-spec → to-tickets → implement-spec
-                        → retro
-```
+完整流程圖、各 skill 的步驟與產出見 [docs/index.html](./docs/index.html)。
 
 | Skill | 誰能執行 | 用途 |
 | --- | --- | --- |
@@ -44,7 +34,7 @@
 | `/wf-handoff` | 只能手動 | 直接執行上游 `handoff`，交接文件存到 `docs/handoffs/`，新 session 才讀得到 |
 | `/wf-help` | 手動或模型 | 依目前的產出判斷所在階段，告訴你下一步 |
 
-### 在你的專案中產生的檔案
+## 在你的專案中產生的檔案
 
 | 檔案 | 由誰產生 |
 | --- | --- |
@@ -62,26 +52,17 @@
 - **單一來源**：流程定義在 `workflow.json`，專案內容定義在 `docs/project-brief.md`。
 - **詢問而非猜測**：每個需要決定的地方都會給建議並等你回答。
 
-## 增減流程（模組化）
+## 維護
 
-```
-workflow.json                    流程的唯一定義：skills、步驟類型、階段
-.claude/skills/wf-*/SKILL.md     每個 wf skill 的實際行為
-shared/conventions.md            所有 wf skill 共用的規則
-.claude-plugin/                  plugin 與 marketplace 設定
-docs/index.html                  架構頁（內嵌 workflow.json）
-scripts/check-workflow.sh        一致性檢查
-```
+| 檔案 | 用途 |
+| --- | --- |
+| `workflow.json` | 流程的唯一定義：skills、步驟類型、階段 |
+| `.claude/skills/wf-*/SKILL.md` | 每個 wf skill 的實際行為 |
+| `shared/conventions.md` | 所有 wf skill 共用的規則 |
+| `.claude-plugin/` | plugin 與 marketplace 設定 |
+| `docs/index.html` | 架構頁（內嵌 `workflow.json`） |
 
-1. 新增、修改或刪除 `.claude/skills/wf-<名稱>/`。
-2. 同步修改 `workflow.json` 與 `.claude-plugin/plugin.json`。
-3. 執行：
-
-```bash
-scripts/check-workflow.sh --fix
-```
-
-它會把流程同步到 `docs/index.html`，並檢查三者是否一致：skill 名稱、能不能被模型呼叫、步驟參照與階段。
+增減 skill 的步驟見 [CLAUDE.md](./CLAUDE.md)；改完執行 `scripts/check-workflow.sh --fix`，它會同步 `docs/index.html` 並檢查一致性。
 
 ## 授權
 

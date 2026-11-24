@@ -8,3 +8,5 @@ disable-model-invocation: true
 # WF Grill Me
 
 以 [conventions.md](../../../shared/conventions.md) 的 **upstream** 方式執行 `grill-me`,把使用者給的參數原封不動帶入。行為與上游 `/grill-me` 完全相同。
+
+完成條件:上游 `grill-me` 的流程走完。

@@ -20,10 +20,10 @@ disable-model-invocation: true
 
 ## 2. 設定專案
 
-`docs/agents/issue-tracker.md` 已存在 → 詢問要「沿用(建議)」或「重新設定」。
-
-否則以 **upstream** 方式執行 `setup-matt-pocock-skills`。完成條件:`docs/agents/` 下的設定檔已寫好,`CLAUDE.md` 或 `AGENTS.md` 有 `## Agent skills` 段落。
+`docs/agents/issue-tracker.md` 已存在時依「產出已存在」處理;否則以 **upstream** 方式執行 `setup-matt-pocock-skills`。完成條件:`docs/agents/` 下的設定檔已寫好,`CLAUDE.md` 或 `AGENTS.md` 有 `## Agent skills` 段落。
 
 ## 3. 收尾
 
 回報清單:每一步「完成 / 略過 / 失敗」,失敗的附手動補救方式。最後提示下一步是 `/wf-design <專案概述>`。
+
+完成條件:清單已回報。

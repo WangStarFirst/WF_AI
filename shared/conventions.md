@@ -6,14 +6,20 @@
 
 每個步驟的類型與 `workflow.json` 的 `stepKinds` 一致:
 
-- **wf**:另一個 wf skill。可被模型呼叫的(`wf-design`、`wf-relate-work`、`wf-prototype`、`wf-project-review`、`wf-help`)用 Skill 工具呼叫;只能手動執行的(`wf-project-setup`、`wf-implement`)讀取它的 SKILL.md(與本 skill 同層的 `../<名稱>/SKILL.md`)照著做。
+- **wf**:另一個 wf skill。沒設 `disable-model-invocation` 的用 Skill 工具呼叫;有設的讀取它的 SKILL.md(與本 skill 同層的 `../<名稱>/SKILL.md`)照著做。
 - **upstream**:上游 mattpocock skill。上游 skill 多半設了 `disable-model-invocation`,Skill 工具叫不到,所以:
   1. 讀取 Target project 的 `.claude/skills/<名稱>/SKILL.md` 全文。
   2. 在同一個 session 照著做;它提到的同層檔案(例如 `UI.md`)從同一個目錄讀取。
   3. 檔案不存在 → 停下來,請使用者先執行 `/wf-project-setup`。
-- **manual**:需要開新 session 的步驟。停下來,告訴使用者:要輸入的完整 `/指令`、新 session 要做什麼、做完後回到哪一步。不要自己模擬這一步。
+- **manual**:需要開新 session 的步驟。停下來,告訴使用者:要輸入的完整 `/指令`、新 session 要做什麼、做完後回到哪一步。不要自己模擬這一步。要換 session 時,先請使用者輸入 `/wf-handoff <下一步>`,再到新 session 執行指定的指令。
 - **subagent**:用 Agent 工具交給 subagent,prompt 寫清楚要回傳的格式;主 session 只保留結論。
 - **ask**:用 AskUserQuestion 詢問。把建議選項放第一個並標「(建議)」,附一句理由;等使用者回答再繼續。
+
+## 共通情況
+
+- **產出已存在**:步驟要寫的檔案已經存在時,給一段摘要,用 **ask** 詢問「沿用(建議)」或「重做」。沿用就略過這一步。
+- **缺少 brief**:需要 `docs/project-brief.md` 卻不存在時,停下來,請使用者先執行 `/wf-design`。
+- **回報呼叫端**:被其他 wf skill 呼叫時,結束前回報一句話結論,讓呼叫端接著做。
 
 ## 專案概述(brief)
 

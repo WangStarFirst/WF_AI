@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "types": [
+    {
+      "type": "unity-game",
+      "title": "Unity 遊戲",
+      "signals": ["Unity", "遊戲", "game"],
+      "repo": "https://github.com/WangStarFirst/WF_Unity_Startup",
+      "habitsPath": "docs/habits.md",
+      "template": true
+    }
+  ]
+}

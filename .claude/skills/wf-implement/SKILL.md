@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 ## 1. 找適合的 skill
 
-以 **subagent** 方式執行,prompt 包含 brief 的核心功能、限制與 ADR 標題,要求它依專案用到的技術與任務類型搜尋 skill:
+以 **subagent** 方式執行,prompt 包含 brief 的核心功能、限制、ADR 標題,以及 `CLAUDE.md` 的 `## 開發習慣` 中指定的 skill(這些一定列入候選),要求它依專案用到的技術與任務類型搜尋 skill:
 
 1. **本機**:目前 session 可用的 skill,以及 `.claude/skills/` 已安裝的。
 2. **plugin marketplace**:用 SearchPlugins 等可用工具搜尋。

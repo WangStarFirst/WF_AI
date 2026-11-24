@@ -1,8 +1,10 @@
 {
   "name": "wf-toolbox",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "WF 工作流:以 mattpocock/skills 為基礎,引導你從設定、設計到實作完成一個專案。",
-  "author": { "name": "WangStarFirst" },
+  "author": {
+    "name": "WangStarFirst"
+  },
   "repository": "https://github.com/WangStarFirst/WF_AI",
   "license": "MIT",
   "skills": [
@@ -13,6 +15,9 @@
     "./.claude/skills/wf-prototype",
     "./.claude/skills/wf-project-review",
     "./.claude/skills/wf-implement",
+    "./.claude/skills/wf-ask-habit",
+    "./.claude/skills/wf-habit-add",
+    "./.claude/skills/wf-lazy-add",
     "./.claude/skills/wf-grill-me",
     "./.claude/skills/wf-handoff",
     "./.claude/skills/wf-help"

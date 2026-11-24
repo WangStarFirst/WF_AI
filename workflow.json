@@ -39,9 +39,10 @@
       "id": "wf-design",
       "title": "設計",
       "invocation": "model",
-      "summary": "從專案概述出發,參考相關專案,經過訪談或 prototype 完成設計,最後畫出架構並詢問是否開始實作。",
+      "summary": "從專案概述出發,選擇開發習慣,參考相關專案,經過訪談或 prototype 完成設計,最後畫出架構並詢問是否開始實作。",
       "steps": [
         { "kind": "action", "text": "取得專案概述(參數帶入或詢問),寫成 docs/project-brief.md" },
+        { "kind": "wf", "ref": "wf-ask-habit", "text": "判斷專案類型,勾選開發習慣寫進 CLAUDE.md" },
         { "kind": "wf", "ref": "wf-relate-work", "text": "調查相關專案,修訂 brief" },
         { "kind": "ask", "text": "建議並詢問要用 grill-with-docs 或 wayfinder" },
         { "kind": "upstream", "ref": "grill-with-docs", "text": "一個 session 能完成的設計:邊問邊寫 ADR 與 GLOSSARY" },
@@ -96,7 +97,7 @@
       "invocation": "user",
       "summary": "找出並安裝適合的 skill,依規模選擇單一或多 session 實作,完成後做 retro。",
       "steps": [
-        { "kind": "subagent", "text": "從本機、plugin marketplace 與網路搜尋適合的 skill" },
+        { "kind": "subagent", "text": "從本機、plugin marketplace 與網路搜尋適合的 skill(含開發習慣指定的)" },
         { "kind": "ask", "text": "列出清單與來源,逐一確認後安裝到 .claude/skills/" },
         { "kind": "ask", "text": "建議並確認是否需要多 session" },
         { "kind": "upstream", "ref": "to-spec", "text": "多 session:把設計整理成 spec" },
@@ -107,6 +108,46 @@
         { "kind": "manual", "ref": "retro", "text": "完成後做回顧" }
       ],
       "outputs": []
+    },
+    {
+      "id": "wf-ask-habit",
+      "title": "開發習慣",
+      "invocation": "model",
+      "summary": "依 brief 判斷專案類型,從 habits.json 的來源讀取開發習慣讓你勾選,寫進 CLAUDE.md;空專案可先下載模板。",
+      "steps": [
+        { "kind": "ask", "text": "依 signals 判斷專案類型並確認(可多選、可跳過)" },
+        { "kind": "action", "text": "clone 類型的來源 repo 到暫存目錄" },
+        { "kind": "ask", "text": "有模板且專案是空的:詢問是否下載模板並合併" },
+        { "kind": "ask", "text": "每個分類一題,勾選習慣" },
+        { "kind": "action", "text": "寫進 CLAUDE.md 的 ## 開發習慣,連結的檔案複製到 docs/habits/" }
+      ],
+      "outputs": ["CLAUDE.md", "docs/habits/"]
+    },
+    {
+      "id": "wf-habit-add",
+      "title": "新增開發習慣",
+      "invocation": "user",
+      "summary": "在來源 repo 直接新增習慣到 habits 檔;在其他專案先暫存到 docs/habits-pending.md。",
+      "steps": [
+        { "kind": "action", "text": "比對 git remote 與 habits.json,決定來源模式或暫存模式" },
+        { "kind": "ask", "text": "逐條選分類、改寫成規則並確認" },
+        { "kind": "action", "text": "寫入 habits 檔或 docs/habits-pending.md" }
+      ],
+      "outputs": ["docs/habits-pending.md"]
+    },
+    {
+      "id": "wf-lazy-add",
+      "title": "增刪改功能",
+      "invocation": "user",
+      "summary": "開發中增刪改功能:釐清變更 → 同步 brief 與 ADR → 實作,中間不停。",
+      "steps": [
+        { "kind": "action", "text": "讀取 brief、ADR 與相關程式碼,找出影響範圍" },
+        { "kind": "upstream", "ref": "grill-with-docs", "text": "釐清這次變更" },
+        { "kind": "action", "text": "更新 brief 與 ADR;刪除的功能移到「不做的事」,ADR 標為已廢止" },
+        { "kind": "wf", "ref": "wf-implement", "text": "依規模實作" },
+        { "kind": "wf", "ref": "wf-project-review", "text": "有刪除功能或新增模組時重畫架構圖" }
+      ],
+      "outputs": ["docs/project-brief.md", "docs/adr/"]
     },
     {
       "id": "wf-grill-me",

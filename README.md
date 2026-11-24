@@ -30,6 +30,9 @@
 | `/wf-prototype` | 手動或模型 | 反覆做 prototype 直到問題有答案，結論寫成 ADR |
 | `/wf-project-review` | 手動或模型 | 把專案內容與架構畫成 `docs/reviews/YYYY-MM-DD.html` |
 | `/wf-implement` | 只能手動 | 找並安裝 skill，選擇單一或多 session 實作，完成後做 retro |
+| `/wf-ask-habit` | 手動或模型 | 判斷專案類型，勾選開發習慣寫進 `CLAUDE.md`；空專案可先下載模板 |
+| `/wf-habit-add` | 只能手動 | 新增開發習慣到來源 repo（其他專案先暫存） |
+| `/wf-lazy-add` | 只能手動 | 開發中增刪改功能：釐清 → 同步 brief 與 ADR → 實作 |
 | `/wf-grill-me` | 只能手動 | 直接執行上游 `grill-me` |
 | `/wf-handoff` | 只能手動 | 直接執行上游 `handoff`，交接文件存到 `docs/handoffs/`，新 session 才讀得到 |
 | `/wf-help` | 手動或模型 | 依目前的產出判斷所在階段，告訴你下一步 |
@@ -41,6 +44,8 @@
 | `.claude/skills/<上游 skill>/` | `/wf-project-setup` |
 | `docs/agents/`、`CLAUDE.md` 的 `## Agent skills` | `setup-matt-pocock-skills` |
 | `docs/project-brief.md` | `/wf-design`（專案內容的唯一來源） |
+| `CLAUDE.md` 的 `## 開發習慣`、`docs/habits/` | `/wf-ask-habit` |
+| `docs/habits-pending.md` | `/wf-habit-add`（暫存模式） |
 | `docs/related-work.md` | `/wf-relate-work` |
 | `docs/adr/`、`GLOSSARY.md` | `grill-with-docs`、`/wf-prototype` |
 | `docs/reviews/YYYY-MM-DD.html` | `/wf-project-review` |
@@ -59,6 +64,7 @@
 | `workflow.json` | 流程的唯一定義：skills、步驟類型、階段 |
 | `.claude/skills/wf-*/SKILL.md` | 每個 wf skill 的實際行為 |
 | `shared/conventions.md` | 所有 wf skill 共用的規則 |
+| `habits.json` | 開發習慣的類型與來源（習慣內容在各來源 repo 維護） |
 | `.claude-plugin/` | plugin 與 marketplace 設定 |
 | `docs/index.html` | 架構頁（內嵌 `workflow.json`） |
 

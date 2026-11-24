@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 檢查 workflow.json、wf skill 目錄、plugin.json、docs/index.html 是否一致。
+# 檢查 workflow.json、wf skill 目錄、plugin.json、habits.json、docs/index.html 是否一致。
 #   scripts/check-workflow.sh        只檢查,不一致時 exit 1
 #   scripts/check-workflow.sh --fix  把 workflow.json 同步嵌入 docs/index.html
 set -euo pipefail
@@ -56,6 +56,17 @@ for st in wf["stages"]:
     if st["next"] not in id_set:
         errors.append(f"stage {st['id']}: next {st['next']} 不是已知的 skill")
 
+# habits.json:每筆類型欄位齊全、type 不重複
+habits = json.loads((root / "habits.json").read_text(encoding="utf-8"))
+need = {"type": str, "title": str, "signals": list, "repo": str, "habitsPath": str, "template": bool}
+seen = set()
+for i, h in enumerate(habits.get("types", []), 1):
+    for k, t in need.items():
+        if not isinstance(h.get(k), t):
+            errors.append(f"habits.json 第 {i} 筆: {k} 缺少或型別錯誤")
+    if h.get("type") in seen: errors.append(f"habits.json: type {h.get('type')} 重複")
+    seen.add(h.get("type"))
+
 # docs/index.html 內嵌的 workflow.json
 html_path = root / "docs/index.html"
 html = html_path.read_text(encoding="utf-8")
@@ -77,5 +88,5 @@ if errors:
     print("✗ 檢查失敗:")
     for e in errors: print("  -", e)
     sys.exit(1)
-print(f"✓ 一致:{len(ids)} 個 wf skill、{len(wf['stages'])} 個階段")
+print(f"✓ 一致:{len(ids)} 個 wf skill、{len(wf['stages'])} 個階段、{len(seen)} 種習慣類型")
 PY
